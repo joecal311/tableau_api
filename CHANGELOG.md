@@ -8,11 +8,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add support for [personal access token](https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_auth.htm#make-a-sign-in-request-with-a-personal-access-token) authentication
+- Add `get_groups` method for users: https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref.htm#get_groups_for_a_user
 
 ### Changed
 
 - Specify major version number of ruby in Docker testing command in README
-- Updated to API version 3.6
+- Updated to API version 3.7
 
 
 ## [4.0.0] - 2020-11-30
