@@ -12,11 +12,11 @@ module TableauApi
         Viewer
       ].freeze
 
-      def create(username:, site_role: 'Viewer')
+      def create(username:, site_role: 'Viewer', auth_setting: 'ServerDefault')
         raise 'invalid site_role' unless SITE_ROLES.include? site_role
 
         request = Builder::XmlMarkup.new.tsRequest do |ts|
-          ts.user(name: username, siteRole: site_role)
+          ts.user(name: username, siteRole: site_role, authSetting: auth_setting)
         end
 
         res = @client.connection.api_post("sites/#{@client.auth.site_id}/users", body: request)
