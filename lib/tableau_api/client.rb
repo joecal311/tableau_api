@@ -45,6 +45,7 @@ module TableauApi
     def self.resources
       {
         auth: TableauApi::Resources::Auth,
+        flows: TableauApi::Resources::Flows,
         projects: TableauApi::Resources::Projects,
         sites: TableauApi::Resources::Sites,
         users: TableauApi::Resources::Users,
