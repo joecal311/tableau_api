@@ -15,6 +15,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Specify major version number of ruby in Docker testing command in README
 - Updated to API version 3.7
 
+## [4.1.0] - 2022-04-13
+
+### Changed
+
+- Specify major version number of ruby in Docker testing command in README
+- Add support for CreateRefreshMetrics and RunExplainData workbook capabilities
 
 ## [4.0.0] - 2020-11-30
 
@@ -27,21 +33,18 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   will not be URL-encoded.
 - Avoid mutating extra argument hash to endpoint methods
 
-
 ## [3.0.0] - 2020-11-11
 
 ### Added
 
 - Added Jobs resource
 
-
 ### Changed
 
 - Updated to API version 3.1
-  - This is a breaking change for site roles: 
+  - This is a breaking change for site roles:
     https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_new_site_roles.htm
 - Include full error detail in TableauError message
-
 
 ## [2.0.0] - 2019-08-29
 
@@ -106,7 +109,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 - Initial Release
 
-[Unreleased]: https://github.com/civisanalytics/tableau_api/compare/v1.1.2...HEAD
+[unreleased]: https://github.com/civisanalytics/tableau_api/compare/v1.1.2...HEAD
 [1.1.2]: https://github.com/civisanalytics/tableau_api/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/civisanalytics/tableau_api/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/civisanalytics/tableau_api/compare/v1.0.0...v1.1.0
