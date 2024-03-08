@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TableauApi
   class Client
     AUTH_TYPE_PERSONAL_ACCESS_TOKEN = :personal_access_token_name
@@ -17,9 +19,11 @@ module TableauApi
       @resources = {}
 
       raise 'host is required' if host.to_s.empty?
+
       @host = host
 
       raise 'site_name is required' if site_name.to_s.empty?
+
       @site_name = site_name
 
       raise 'username or personal_access_token_name is required' if personal_access_token_name.to_s.empty? && username.to_s.empty?

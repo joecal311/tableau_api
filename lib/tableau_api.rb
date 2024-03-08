@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'httparty'
 require 'builder'
 require 'net/http/post/multipart'
@@ -20,7 +22,7 @@ require 'tableau_api/resources/jobs'
 
 module TableauApi
   class << self
-    def new(options = {})
+    def new(**options)
       Client.new(**options)
     end
   end
