@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TableauApi
   module Resources
     class Flows < Base
@@ -7,8 +9,7 @@ module TableauApi
       end
 
       def run(flow_id)
-        request = Builder::XmlMarkup.new.tsRequest do |ts|
-        end
+        request = Builder::XmlMarkup.new.tsRequest
 
         res = @client.connection.api_post("sites/#{@client.auth.site_id}/flows/#{flow_id}/run", body: request)
 

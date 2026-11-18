@@ -21,7 +21,7 @@ describe TableauApi::Resources::Auth, vcr: { cassette_name: 'auth' } do
     end
 
     it 'fails appropriately with a bad username or password' do
-      client = TableauApi.new(host: ENV['TABLEAU_HOST'], site_name: 'Default', username: 'foo', password: 'bar')
+      client = TableauApi.new(host: ENV.fetch('TABLEAU_HOST', nil), site_name: 'Default', username: 'foo', password: 'bar')
       expect(client.auth.sign_in).to be false
     end
 
@@ -38,10 +38,10 @@ describe TableauApi::Resources::Auth, vcr: { cassette_name: 'auth' } do
 
     it 'signs into a different site' do
       client = TableauApi.new(
-        host: ENV['TABLEAU_HOST'],
+        host: ENV.fetch('TABLEAU_HOST', nil),
         site_name: 'TestSite',
-        username: ENV['TABLEAU_ADMIN_USERNAME'],
-        password: ENV['TABLEAU_ADMIN_PASSWORD']
+        username: ENV.fetch('TABLEAU_ADMIN_USERNAME', nil),
+        password: ENV.fetch('TABLEAU_ADMIN_PASSWORD', nil)
       )
       expect(client.auth.sign_in).to be true
       expect(client.auth.token).to be_a_token
@@ -79,22 +79,23 @@ describe TableauApi::Resources::Auth, vcr: { cassette_name: 'auth' } do
   describe 'personal access token' do
     let(:client) do
       TableauApi.new(
-        host: ENV['TABLEAU_HOST'],
+        host: ENV.fetch('TABLEAU_HOST', nil),
         site_name: 'Default',
-        personal_access_token_name: ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME'],
-        personal_access_token_secret: ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET']
+        personal_access_token_name: ENV.fetch('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME', nil),
+        personal_access_token_secret: ENV.fetch('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET', nil)
       )
     end
 
     # http://onlinehelp.tableau.com/v9.0/api/rest_api/en-us/help.htm#REST/rest_api_concepts_auth.htm%3FTocPath%3DConcepts%7C_____3
     # http://onlinehelp.tableau.com/v9.0/api/rest_api/en-us/help.htm#REST/rest_api_ref.htm#Sign_In%3FTocPath%3DAPI%2520Reference%7C_____51
     it 'returns an instance of TableauApi::Resources::Auth' do
-      client = TableauApi.new(host: 'tableau.domain.tld', site_name: 'Default', personal_access_token_name: 'ExamplePersonalAccessTokenName', personal_access_token_secret: 'ExamplePersonalAccessTokenSecret')
+      client = TableauApi.new(host: 'tableau.domain.tld', site_name: 'Default', personal_access_token_name: 'ExamplePersonalAccessTokenName',
+                              personal_access_token_secret: 'ExamplePersonalAccessTokenSecret')
       expect(client.auth).to be_an_instance_of(TableauApi::Resources::Auth)
     end
 
     it 'fails appropriately with a bad access token credentials' do
-      client = TableauApi.new(host: ENV['TABLEAU_HOST'], site_name: 'Default', personal_access_token_name: 'foo', personal_access_token_secret: 'bar')
+      client = TableauApi.new(host: ENV.fetch('TABLEAU_HOST', nil), site_name: 'Default', personal_access_token_name: 'foo', personal_access_token_secret: 'bar')
       expect(client.auth.sign_in).to be false
     end
 
@@ -111,10 +112,10 @@ describe TableauApi::Resources::Auth, vcr: { cassette_name: 'auth' } do
 
     it 'signs into a different site' do
       client = TableauApi.new(
-        host: ENV['TABLEAU_HOST'],
+        host: ENV.fetch('TABLEAU_HOST', nil),
         site_name: 'TestSite',
-        personal_access_token_name: ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME'],
-        personal_access_token_secret: ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET']
+        personal_access_token_name: ENV.fetch('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME', nil),
+        personal_access_token_secret: ENV.fetch('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET', nil)
       )
       expect(client.auth.sign_in).to be true
       expect(client.auth.token).to be_a_token

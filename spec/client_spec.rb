@@ -24,7 +24,8 @@ describe TableauApi::Client do
   end
 
   it 'provides info about the authentication type based on params' do
-    expect(TableauApi.new(host: 'tableau.domain.tld', site_name: 'Default', personal_access_token_name: 'ExampleTokenName', personal_access_token_secret: 'ExampleTokenSecret').authentication_type).to eq(TableauApi::Client::AUTH_TYPE_PERSONAL_ACCESS_TOKEN)
+    expect(TableauApi.new(host: 'tableau.domain.tld', site_name: 'Default', personal_access_token_name: 'ExampleTokenName',
+                          personal_access_token_secret: 'ExampleTokenSecret').authentication_type).to eq(TableauApi::Client::AUTH_TYPE_PERSONAL_ACCESS_TOKEN)
     expect(TableauApi.new(host: 'tableau.domain.tld', site_name: 'Default', username: 'ExampleUsername').authentication_type).to eq(TableauApi::Client::AUTH_TYPE_TRUSTED_TICKET)
     expect(TableauApi.new(host: 'tableau.domain.tld', site_name: 'Default', username: 'ExampleUsername', password: 'ExamplePassword').authentication_type).to eq(TableauApi::Client::AUTH_TYPE_USERNAME_AND_PASSWORD)
   end

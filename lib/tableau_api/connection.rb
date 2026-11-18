@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 module TableauApi
   class Connection
-    API_VERSION = '3.7'.freeze
+    DEFAULT_API_VERSION = '3.7'
 
     include HTTParty
+
     headers 'User-Agent' => "tableau_api/#{::TableauApi::VERSION} Ruby/#{RUBY_VERSION}"
 
-    def initialize(client)
+    def initialize(client, api_version: DEFAULT_API_VERSION)
       @client = client
+      @api_version = api_version
     end
 
     def post(path, **kwargs)
@@ -84,7 +88,9 @@ module TableauApi
     end
 
     def url_for(path)
-      "#{@client.host}/api/#{API_VERSION}#{'/' unless path[0] == '/'}#{path}"
+      base = "#{@client.host}/api/#{@api_version}"
+      path_parts = path.split('/').reject(&:empty?)
+      File.join(base, *path_parts)
     end
 
     # will attempt to signin if the token hasn't been loaded

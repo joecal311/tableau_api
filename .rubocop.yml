@@ -1,14 +1,25 @@
 inherit_from: .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.4
   NewCops: enable
+  SuggestExtensions: false
 
 Gemspec/RequiredRubyVersion:
   Enabled: false 
 
 Layout/LineLength:
   Max: 170
+  Exclude:
+    - spec/spec_helper.rb
+
+Naming/PredicateMethod:
+  Exclude:
+    - lib/tableau_api/resources/auth.rb
+    - lib/tableau_api/resources/flows.rb
+    - lib/tableau_api/resources/groups.rb
+    - lib/tableau_api/resources/users.rb
+    - lib/tableau_api/resources/workbooks.rb
 
 Style/Documentation:
   Enabled: false

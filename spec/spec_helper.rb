@@ -8,9 +8,9 @@ require 'pry'
 require 'vcr'
 
 if ENV['TABLEAU_ADMIN_USERNAME'].nil? ||
-  ENV['TABLEAU_ADMIN_PASSWORD'].nil? ||
-  ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME'].nil? ||
-  ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET'].nil?
+   ENV['TABLEAU_ADMIN_PASSWORD'].nil? ||
+   ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME'].nil? ||
+   ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET'].nil?
   puts 'TABLEAU_ADMIN_USERNAME, TABLEAU_ADMIN_PASSWORD, TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME, and TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET must be set to record new VCR cassettes'
 
   ENV['TABLEAU_ADMIN_USERNAME'] = 'FakeTableauAdminUsername'
@@ -29,7 +29,7 @@ VCR.configure do |config|
 
   config.filter_sensitive_data('TABLEAU_ADMIN_USERNAME') { ENV.fetch('TABLEAU_ADMIN_USERNAME', nil) }
   config.filter_sensitive_data('TABLEAU_ADMIN_PASSWORD') { ENV['TABLEAU_ADMIN_PASSWORD'].encode(xml: :text) }
-  config.filter_sensitive_data('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME') { ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME'] }
+  config.filter_sensitive_data('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME') { ENV.fetch('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME', nil) }
   config.filter_sensitive_data('TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET') { ENV['TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_SECRET'].encode(xml: :text) }
   config.filter_sensitive_data('http://TABLEAU_HOST') { ENV.fetch('TABLEAU_HOST', nil) }
 
@@ -39,7 +39,9 @@ VCR.configure do |config|
   config.before_record do |interaction|
     response = interaction.response
     elements = response.body.scan(/<(?:site|user)\s[^>]+name[^>]+>/)
-    sensitive_elements = elements.reject { |e| e.match(/"(Default|TestSite|Test Site 2|test|test_test|TABLEAU_ADMIN_USERNAME|TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME)"/) }
+    sensitive_elements = elements.reject do |e|
+      e.match(/"(Default|TestSite|Test Site 2|test|test_test|TABLEAU_ADMIN_USERNAME|TABLEAU_ADMIN_PERSONAL_ACCESS_TOKEN_NAME)"/)
+    end
     unless sensitive_elements.empty?
       sensitive_elements.each { |e| response.body.gsub! e, '' }
       response.body.gsub!(/totalAvailable="\d+"/, "totalAvailable=\"#{elements.length - sensitive_elements.length}\"")

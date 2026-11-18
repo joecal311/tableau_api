@@ -49,7 +49,7 @@ module TableauApi
 
         # consider 401 to be successful since signing out with an expired
         # token fails, but we can still consider the user signed out
-        return false unless res.code == 204 || res.code == 401
+        return false unless [204, 401].include?(res.code)
 
         @token = nil
         @site_id = nil
